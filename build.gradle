@@ -1,0 +1,13 @@
+plugins {
+    id 'groovy'
+}
+
+group 'com.github.tokageel'
+version '0.0.1'
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+}
+
+jar.baseName = 'gradle-ipf-plugin'
