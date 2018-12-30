@@ -13,24 +13,28 @@ class IpfPlugin implements Plugin<Project> {
             delete project.file("${project.buildDir}")
         }
 
-        project.task('build', dependsOn: 'clean') << {
-            project.copy {
-                from "${project.addon.sourceDir}"
-                into "${project.addon.intermediatePath}"
-            }
-            project.exec {
-                workingDir "${project.buildDir}"
-                commandLine 'ipf', "${project.addon.ipfFileName}", "${project.addon.name}"
+        project.task('build', dependsOn: 'clean') {
+            doLast {
+                project.copy {
+                    from "${project.addon.sourceDir}"
+                    into "${project.addon.intermediatePath}"
+                }
+                project.exec {
+                    workingDir "${project.buildDir}"
+                    commandLine 'ipf', "${project.addon.ipfFileName}", "${project.addon.name}"
+                }
             }
         }
 
-        project.task('info') << {
-            println "name: ${project.addon.name}"
-            println "version: ${project.addon.version}"
-            println "unicode: ${project.addon.unicode}"
-            println "source: ${project.addon.sourceDir}"
-            println "filename: ${project.addon.ipfFileName}"
-            println "intermediate: ${project.addon.intermediatePath}"
+        project.task('info') {
+            doLast {
+                println "name: ${project.addon.name}"
+                println "version: ${project.addon.version}"
+                println "unicode: ${project.addon.unicode}"
+                println "source: ${project.addon.sourceDir}"
+                println "filename: ${project.addon.ipfFileName}"
+                println "intermediate: ${project.addon.intermediatePath}"
+            }
         }
     }
 }
